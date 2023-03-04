@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package CameraObject;
+
+
+message CameraBox
+{
+     float xPixel = 1;   //目标左上角坐标x（像素）
+     float yPixel = 2;   //目标左上角坐标y（像素）
+     float wPixel = 3;   //目标宽度（像素）
+     float hPixel = 4;   //目标高度（像素）
+     float xWorld = 5;   //目标世界坐标x
+     float yWorld = 6;   //目标世界坐标y
+     float zWorld = 7;   //目标世界坐标z
+     float lenReal = 8;  //目标真实长度 
+     float wReal = 9;    //目标真实宽度 
+     float hReal = 10;   //目标真实高度 
+     float conf = 11;    //检测框置信度
+     int32 label = 12;   //检测类型
+     float trackID = 13;  //跟踪识别号
+
+}
+
+message CameraObjects   //一帧图像中的所有检测目标 
+{
+     int32 type = 1; //定义参考表 5
+     repeated CameraBox boxes= 2;//单帧图片所有结果
+     int64 timestamp = 3;//系统时间戳
+}

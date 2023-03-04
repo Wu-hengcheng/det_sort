@@ -1,0 +1,49 @@
+cmake_minimum_required(VERSION 2.8)
+project(perception)
+set(CMAKE_CXX_STANDARD 11)
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -Wall -g2 -ggdb -std=c++11 -I -rpath=/opt/ros/melodic/lib")
+option(CUDA_USE_STATIC_CUDA_RUNTIME OFF)
+find_package(OpenCV REQUIRED)
+message(STATUS "OpenCV library status:")
+message(STATUS "    version: 	${OpenCV_VERSION}")
+message(STATUS "    headers: 	${OpenCV_INCLUDE_DIRS}")
+message(STATUS "    libraries: 	${OpenCV_LIBS}")
+include_directories(${OpenCV_INCLUDE_DIRS})
+link_directories(${OpenCV_DIR})
+find_package(Threads)
+link_libraries(opencv_core opencv_imgproc opencv_highgui opencv_imgcodecs pthread protobuf)
+
+find_package(CUDA REQUIRED)
+
+include_directories(/usr/local/cuda/include)
+link_directories(/usr/local/cuda/lib64)
+find_library(LIBNVONNXPARSER NAME nvonnxparser HINTS ${TENSORRT_LIB_PATH} REQUIRED)
+
+include_directories(/home/midas/TensorRT-8.0.1.6/include/)
+link_directories(/home/midas/TensorRT-8.0.1.6/lib/)
+
+include_directories(${PROJECT_SOURCE_DIR}/include)
+file(GLOB catkin_LIBRARIES "/opt/ros/melodic/lib/lib*.so")
+include_directories(/opt/ros/melodic/include;/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp;/usr/include;/usr/include/opencv4)
+
+
+add_executable(${PROJECT_NAME} utils.h logging.h object.pb.cc object.pb.h main.cpp 
+                yolox.h yolox.cpp run.h run.cpp subscribe.cpp subscribe.h)
+
+target_link_libraries(${PROJECT_NAME} nvinfer)
+target_link_libraries(${PROJECT_NAME} cudart)
+target_link_libraries(${PROJECT_NAME} ${LIBNVONNXPARSER})
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} ${CMAKE_THREAD_LIBS_INIT} ${catkin_LIBRARIES}
+#    /home/nvidia/Downloads/airPort_capture/lib/librosPubInterface.so
+    /opt/ros/melodic/lib/libimage_transport.so
+    /opt/ros/melodic/lib/libcv_bridge.so
+    /opt/ros/melodic/lib/libroscpp.so
+    /opt/ros/melodic/lib/libcpp_common.so
+    /opt/ros/melodic/lib/librosconsole_bridge.so
+    /opt/ros/melodic/lib/librosconsole.so
+    /opt/ros/melodic/lib/libmessage_filters.so
+    /opt/ros/melodic/lib/libroscpp_serialization.so
+    /opt/ros/melodic/lib/librviz.so
+    /opt/ros/melodic/lib/librosbag_storage.so
+    /opt/ros/melodic/lib/libtopic_tools.so
+    )

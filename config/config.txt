@@ -1,0 +1,9 @@
+localIpAddress=192.168.137.123
+sourceIpAddress=192.168.137.66
+rtpDstIpAddress=192.168.137.255
+udpPort=8888
+rtpPort=7777
+username=cd206
+password=cf206cf206
+detectMode=1
+laneMode=1

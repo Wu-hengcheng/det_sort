@@ -1,0 +1,20 @@
+yolox:
+    input_w: 1280
+    input_h: 704
+    num_classes: 2
+    input_blob_name: input_0
+    output_blob_name: output_0
+    
+    # use space key to split classes
+    class_names: person vehicle
+    onnx_path: ../config/fps/yolox_m_1280_704.onnx
+    engine_path: ../config/fps/yolox_m_1280_704.engine
+    nms_thresh: 0.45
+    bbox_conf_thresh: 0.3
+
+person_publish_topic: /cd206/perception/cameraDetect/chX/person
+sub_img_topic: camera/image
+# if path is .oonx file path , it will generate and save a .engine file to ./person/deepsort.engine
+deepsort_engine_path: ../config/person/deepsort.engine
+
+show_img: True
