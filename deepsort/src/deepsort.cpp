@@ -1,19 +1,23 @@
 #include "deepsort.h"
 
 DeepSort::DeepSort(std::string modelPath, int batchSize, int featureDim, int gpuID, ILogger* gLogger) {
+    YAML::Node config = YAML::LoadFile("../config/config.yaml");
     this->gpuID = gpuID;
     this->enginePath = modelPath;
     this->batchSize = batchSize;
     this->featureDim = featureDim;
     this->imgShape = cv::Size(64, 128);
-    this->maxBudget = 100;
-    this->maxCosineDist = 0.2;
+    this->maxBudget = config["deepsort"]["maxBudget"].as<int>();
+    this->maxCosineDist = config["deepsort"]["maxCosineDist"].as<float>();
+    this->maxAge = config["deepsort"]["maxAge"].as<int>();
+    this->nInit = config["deepsort"]["nInit"].as<int>();
+    this->maxIouDist = config["deepsort"]["maxIouDist"].as<float>();
     this->gLogger = gLogger;
     init();
 }
 
 void DeepSort::init() {
-    objTracker = new tracker(maxCosineDist, maxBudget);
+    objTracker = new tracker(maxCosineDist, maxBudget , maxIouDist , maxAge , nInit);
     featureExtractor = new FeatureTensor(batchSize, imgShape, featureDim, gpuID, gLogger);
     int ret = enginePath.find(".onnx");
     if (ret != -1){

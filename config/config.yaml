@@ -14,7 +14,13 @@ yolox:
 
 person_publish_topic: /cd206/perception/cameraDetect/chX/person
 sub_img_topic: camera/image
-# if path is .oonx file path , it will generate and save a .engine file to ./person/deepsort.engine
-deepsort_engine_path: ../config/person/deepsort.engine
-
 show_img: True
+
+deepsort:
+    # if path is .oonx file path , it will generate and save a .engine file to ./person/deepsort.engine
+    deepsort_engine_path: ../config/person/deepsort.engine
+    maxBudget: 100
+    maxCosineDist: 0.2
+    maxAge: 200
+    nInit: 20
+    maxIouDist: 0.7

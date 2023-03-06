@@ -17,7 +17,7 @@ Yolox::Yolox(int mode)
     // undistort["mapx"] >> xmap;
     // undistort["mapy"] >> ymap;
     YAML::Node config = YAML::LoadFile("../config/config.yaml");
-    sort_engine_path = config["deepsort_engine_path"].as<std::string>();
+    sort_engine_path = config["deepsort"]["deepsort_engine_path"].as<std::string>();
     INPUT_W = config["yolox"]["input_w"].as<int>();
     INPUT_H = config["yolox"]["input_h"].as<int>();
     NUM_CLASSES = config["yolox"]["num_classes"].as<int>();

@@ -41,6 +41,9 @@ private:
     float nmsThres;
     int maxBudget;
     float maxCosineDist;
+    int maxAge;
+    int nInit;
+    float maxIouDist;
 
 private:
     vector<RESULT_DATA> result;
