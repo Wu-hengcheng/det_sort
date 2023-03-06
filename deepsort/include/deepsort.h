@@ -7,6 +7,7 @@
 #include "tracker.h"
 #include "datatype.h"
 #include <vector>
+#include <yaml-cpp/yaml.h>
 
 #include "../../object.pb.h"
 #include "deepsortenginegenerator.h"

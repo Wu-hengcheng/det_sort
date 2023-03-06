@@ -44,7 +44,7 @@ int Trtyolosort::TrtDetect(cv::Mat &frame , CameraObject::CameraObjects &det){
 void Trtyolosort::showDetection(cv::Mat& img, CameraObject::CameraObjects& boxes ) {
     //todo: add save video function
     cv::Mat temp = img.clone();
-	//wuhc: show real class name and different colors boxes
+	//wuhc:  show real class name and different colors boxes
     cv::Scalar color , txt_color , txt_bk_color;
     cv::String lbl;
 
@@ -73,6 +73,6 @@ void Trtyolosort::showDetection(cv::Mat& img, CameraObject::CameraObjects& boxes
         // cv::putText(temp, lbl, lt, cv::FONT_HERSHEY_COMPLEX, 0.5, cv::Scalar(0,255,0));
         cv::putText(temp, lbl, cv::Point(lt.x, y - label_size.height+5), cv::FONT_HERSHEY_SIMPLEX, 0.4, txt_color, 1);
     }
-    cv::imshow("yolosort_img", temp);
+    cv::imshow("detsort_img", temp);
     cv::waitKey(1);
 }
